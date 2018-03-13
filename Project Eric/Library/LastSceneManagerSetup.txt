@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/sunny day scene.unity
+- path: Assets/Scenes/Ray_TestScene.unity
   isLoaded: 1
   isActive: 1
