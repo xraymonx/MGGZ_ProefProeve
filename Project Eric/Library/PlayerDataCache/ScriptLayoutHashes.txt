@@ -270,5 +270,5 @@ f3fd3fb52070d6ee5266d0c25cb1b49f Assembly-CSharp.dll:Valve.VR.InteractionSystem.
 05524b8f659e7bfe5756d1335fec24ba Assembly-UnityScript.dll:.WavingAnimation Script
 72b15d35918a073c7019e79218d45456 Assembly-CSharp.dll:.SteamVR_Camera
 370d9773e419236cba1ca142f9d9ad72 Assembly-CSharp.dll:.Weather
-0f3d4bb7128a287827d041c696039525 Assembly-CSharp.dll:UnityStandardAssets.Utility.AutoMobileShaderSwitch
 650c1e412dac0323d37ae3023565f947 Assembly-CSharp.dll:.Save
+0f3d4bb7128a287827d041c696039525 Assembly-CSharp.dll:UnityStandardAssets.Utility.AutoMobileShaderSwitch
