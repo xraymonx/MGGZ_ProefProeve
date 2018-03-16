@@ -12,19 +12,23 @@ public class FotoManager : MonoBehaviour
     [SerializeField]
     private SpriteRenderer spriteTochange;
 
+    private Bounds sizeOfSprites;
     [SerializeField]
     private Rect imageBookArea;
     private List<Texture2D> images = new List<Texture2D>();
 
     private string imageFolderPath = "";
-    private void Start() {
 
+    private void Start()
+    {
+        sizeOfSprites = spriteTochange.bounds;
         SearchForImageFolder();
 
 
     }
 
-    private void SearchForImageFolder() {
+    private void SearchForImageFolder()
+    {
         imageFolderPath = Path.GetFullPath(StringValues.FolderPath + "/" + "images");
         Debug.Log(imageFolderPath);
 
@@ -34,20 +38,27 @@ public class FotoManager : MonoBehaviour
     }
 
 
-    IEnumerator LoadAll(string[] filePaths) {
+    IEnumerator LoadAll(string[] filePaths)
+    {
 
-        foreach(string filePath in filePaths) {
+        foreach (string filePath in filePaths)
+        {
             WWW load = new WWW("file:///" + filePath);
             yield return load;
-            if(!string.IsNullOrEmpty(load.error)) {
+            if (!string.IsNullOrEmpty(load.error))
+            {
                 Debug.LogWarning(filePath + " error");
-            } else {
+            }
+            else
+            {
                 images.Add(load.texture);
             }
         }
 
-        Debug.Log(images.Count);
+        Sprite newImageSprite = Sprite.Create(images[1], new Rect(0, 0, images[1].width, images[1].height), new Vector2(0.5f, 0.5f), 5000f);
 
-        spriteTochange.sprite = Sprite.Create(images[1], new Rect(0, 0, images[1].width, images[1].height), new Vector2(0, 0));
+        spriteTochange.sprite = newImageSprite;
+
+
     }
 }
