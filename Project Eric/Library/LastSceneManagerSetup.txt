@@ -2,3 +2,6 @@ sceneSetups:
 - path: Assets/Scenes/Ray_TestScene.unity
   isLoaded: 1
   isActive: 1
+- path: Assets/Scenes/Huiskamer.unity
+  isLoaded: 1
+  isActive: 0

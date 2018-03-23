@@ -12,52 +12,73 @@ public class FotoManager : MonoBehaviour
     [SerializeField]
     private SpriteRenderer spriteTochange;
 
-    private Bounds sizeOfSprites;
-    [SerializeField]
-    private Rect imageBookArea;
     private List<Texture2D> images = new List<Texture2D>();
+    private List<Sprite> sprites = new List<Sprite>();
 
     private string imageFolderPath = "";
 
-    private void Start()
-    {
-        sizeOfSprites = spriteTochange.bounds;
+    [SerializeField]
+    private SaveAndLoadImage saveAndLoadImage;
+    [SerializeField]private UITextFillFromData textFill;
+
+    private int currentImage = 0;
+
+    private void Start() {
         SearchForImageFolder();
-
-
     }
 
-    private void SearchForImageFolder()
-    {
-        imageFolderPath = Path.GetFullPath(StringValues.FolderPath + "/" + "images");
-        Debug.Log(imageFolderPath);
+    public void NextImage(bool FlipPage) {
+        if(FlipPage) {
+            if(currentImage < images.Count) {
+                textFill.SaveCurrentText(currentImage);
+                currentImage++;
+                LoadImageAndText(currentImage);
 
-        StartCoroutine("LoadAll", Directory.GetFiles(imageFolderPath, "*.png", SearchOption.AllDirectories));
-
-
-    }
-
-
-    IEnumerator LoadAll(string[] filePaths)
-    {
-
-        foreach (string filePath in filePaths)
-        {
-            WWW load = new WWW("file:///" + filePath);
-            yield return load;
-            if (!string.IsNullOrEmpty(load.error))
-            {
-                Debug.LogWarning(filePath + " error");
             }
-            else
-            {
-                images.Add(load.texture);
+        } else {
+            if(currentImage > 0) {
+                textFill.SaveCurrentText(currentImage);
+                currentImage--;
+                LoadImageAndText(currentImage);
             }
         }
 
-        Sprite newImageSprite = Sprite.Create(images[1], new Rect(0, 0, images[1].width, images[1].height), new Vector2(0.5f, 0.5f), 5000f);
+    }
+    private void SearchForImageFolder() {
+        imageFolderPath = Path.GetFullPath(StringValues.FolderPath + "/" + "images");
+        Debug.Log(imageFolderPath);
 
-        spriteTochange.sprite = newImageSprite;
+        StartCoroutine("LoadAll", Directory.GetFiles(imageFolderPath, "*.*", SearchOption.AllDirectories));
+
+
+    }
+
+
+    IEnumerator LoadAll(string[] filePaths) {
+
+        foreach(string filePath in filePaths) {
+            WWW load = new WWW("file:///" + filePath);
+            yield return load;
+            if(!string.IsNullOrEmpty(load.error)) {
+                Debug.LogWarning(filePath + " error");
+            } else {
+                images.Add(load.texture);
+            }
+        }
+        CreateSpritesFromTextures();
+
+    }
+    private void CreateSpritesFromTextures() {
+        foreach(Texture2D texture in images) {
+            Sprite newImageSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), 10000f);
+            sprites.Add(newImageSprite);
+        }
+        LoadImageAndText(currentImage);
+    }
+    private void LoadImageAndText(int imageNumber) {        
+
+        spriteTochange.sprite = sprites[imageNumber];
+        textFill.FillText(imageNumber);
 
 
     }

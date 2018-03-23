@@ -23,7 +23,7 @@ public class SaveAndLoadImage : MonoBehaviour
     public string FolderPath {
         get { return folderPath; }
     }
-    private string patientFolder = "PatientFolder";
+
 
     //private int imageID = 1;
     private void Awake() {
@@ -32,9 +32,8 @@ public class SaveAndLoadImage : MonoBehaviour
         var stringPath = Application.dataPath + "/../"; // Get directory in unity its the Assets folder, in the build its the _Data folder, add  + "/../" so its goes back a folder.
         folderPath = Path.GetFullPath(stringPath); // set the new directory for search
 
-        StringValues.FolderPath = folderPath + patientFolder;
-        SaveFile("homooo", 1);
-        Debug.Log(LoadFile(1));
+        StringValues.FolderPath = folderPath + StringValues.PatientFolder;
+
     }
 
 
@@ -69,7 +68,23 @@ public class SaveAndLoadImage : MonoBehaviour
             return data.ImageText; //return the data
             //testDataString = data.imageText;
         } else {
-            return "No data found"; // .Dat file doesnt exist. 
+            return ""; // .Dat file doesnt exist. 
         }
     }
+  /*  public IEnumerator LoadTextFromFile(int imageID, System.Action<String> result) {
+
+        if(File.Exists(StringValues.FolderPath + "/" + imageID + ".dat")) { //check if the .dat file exists ( error pervention)
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(StringValues.FolderPath + "/" + imageID + ".dat", FileMode.Open); // open the file
+            
+            SaveClass data = (SaveClass)bf.Deserialize(file); //extract data
+            
+            file.Close();
+
+            result(data.ImageText); //return the data
+            //testDataString = data.imageText;
+        } else {
+            result("No data found"); // .Dat file doesnt exist. 
+        }
+    }*/
 }

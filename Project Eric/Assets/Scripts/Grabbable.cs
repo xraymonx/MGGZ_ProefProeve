@@ -2,30 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Valve.VR;
 
 public class Grabbable : MonoBehaviour
 {
+    private EVRButtonId triggerButton = EVRButtonId.k_EButton_SteamVR_Trigger;
 
     private bool isGrabbed = false;
 
     private bool triggerButtonDown = false;
 
-    private Valve.VR.EVRButtonId triggerButton = Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger;
     private SteamVR_TrackedObject trackedObj;
 
     private GameObject parentObj;
 
-    private SteamVR_Controller.Device controller {
-        get {
-            return SteamVR_Controller.Input((int)trackedObj.index);
-        }
-    }
+
     private void OnTriggerStay(Collider collision) {
         
 
         if(collision.gameObject.tag == "Tracker") {
             trackedObj = collision.GetComponent<SteamVR_TrackedObject>();
+            Debug.Log("Tracker");
             if (IsPressed()) {
+                Debug.Log("IsPressed");
                 //Trigger Pressed
                 parentObj = collision.gameObject;
                 isGrabbed = true;
@@ -47,11 +46,6 @@ public class Grabbable : MonoBehaviour
                 this.gameObject.transform.parent = null;
             }
     }
-    private bool IsPressed() {    
-        return controller.GetPressDown(Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger);
-    }
-    private bool IsNotPressed() {
-        return controller.GetPressUp(Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger);
-    }
+
     
 }
