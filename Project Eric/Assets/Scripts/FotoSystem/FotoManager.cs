@@ -23,6 +23,7 @@ public class FotoManager : MonoBehaviour
 
     private int currentImage = 0;
 
+
     private void Start() {
         SearchForImageFolder();
     }

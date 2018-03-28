@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class StringValues {
 
+
     public static string FolderPath = "";
     public static string PatientFolder = "PatientFolder";
 
